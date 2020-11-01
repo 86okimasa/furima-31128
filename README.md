@@ -2,18 +2,16 @@
 
 ## users テーブル
 
-| Column      | Type   | Options                   |
-| ----------- | ------ | ------------------------- |
-| nickname    | string | null: false, unique: true |
-| password    | string | null: false               |
-| email       | string | null: false, unique: true |
-| family_name | string | null: false               |
-| first_name  | string | null: false               |
-| family_kana | string | null: false               |
-| first_kana  | string | null: false               |
-| year        | date   | null: false               |
-| month       | date   | null: false               |
-| day         | date   | null: false               |
+| Column             | Type   | Options                   |
+| ------------------ | ------ | ------------------------- |
+| nickname           | string | null: false,              |
+| encrypted_password | string | null: false               |
+| email              | string | null: false, unique: true |
+| family_name        | string | null: false               |
+| first_name         | string | null: false               |
+| family_kana        | string | null: false               |
+| first_kana         | string | null: false               |
+| birthday           | date   | null: false               |
 
 ### Association
 
@@ -22,18 +20,17 @@
 
 ## items テーブル
 
-| Column      | Type       | Options     |
-| ----------- | ---------- | ----------- |
-| name        | string     | null: false |
-| explanation | text       | null: false |
-| category    | string     | null: false |
-| condition   | string     | null: false |
-| shipping    | string     | null: false |
-| publisher   | string     | null: false |
-| dispatch    | string     | null: false |
-| price       | string     | null: false |
-| image       |            |             |
-| user        | references |             |
+| Column       | Type       | Options           |
+| ------------ | ---------- | ----------------- |
+| name         | string     | null: false       |
+| explanation  | text       | null: false       |
+| category_id  | integer    | null: false       |
+| condition_id | integer    | null: false       |
+| shipping_id  | integer    | null: false       |
+| publisher_id | integer    | null: false       |
+| dispatch_id  | integer    | null: false       |
+| price        | integer    | null: false       |
+| user         | references | foreign_key: true |
 
 ### Association
 
@@ -42,11 +39,10 @@
 
 ## purchases テーブル
 
-| Column        | Type       | Options |
-| ------------- | ---------- | ------- |
-| purchase_date | timestamp  |         |
-| user          | references |         |
-| item          | references |         |
+| Column        | Type       | Options           |
+| ------------- | ---------- | ----------------- |
+| user          | references | foreign_key: true |
+| item          | references | foreign_key: true |
  
 ### Association
 
@@ -56,17 +52,17 @@
 
 ## purchasers
 
- Column          | Type       | Options     |
-| -------------- | ---------- | ----------- |
-| postal_code    | integer    | null: false |
-| prefectures    | string     | null: false |
-| municipalities | string     | null: false |
-| address        | integer    | null: false |
-| building       | string     |             |
-| number         | integer    | null: false |
-| purchase       | references |             |
+ Column          | Type       | Options           |
+| -------------- | ---------- | ----------------- |
+| postal_code    | string     | null: false       |
+| prefecture_id  | integer    | null: false       |
+| municipalities | string     | null: false       |
+| address        | string     | null: false       |
+| building       | string     |                   |
+| number         | string     | null: false       |
+| purchase       | references | foreign_key: true |
 
 ### Association
 
--belongs_tp :purchase
+- belongs_to :purchase
 
