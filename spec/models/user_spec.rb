@@ -9,25 +9,6 @@ RSpec.describe User, type: :model do
       it "ユーザー情報及び本人確認の項目が全て存在すれば登録できる" do
         expect(@user).to be_valid
       end
-      # it "emailが一意性であれば登録できる" do
-      # end
-      # it "emailに@が含まれていれば登録できる" do
-      # end
-      it "passwordが６文字以上なら登録できる" do
-        @user.password = "123abc"
-        @user.password_confirmation = "123abc"
-        expect(@user).to be_valid
-      end
-      # it "passwordが半角英数混合で入力されていれば登録できる"　do
-      # end
-      # it "passwordは確認用を含めて2回入力されていれば登録できる"　do
-      # end
-      # it  "パスワードと確認用パスワードの値が一致していれば登録できる"　do
-      # end
-      # it "本名は全角（漢字、カタカナ、ひらがな）で入力されていれば登録できる" do
-      # end
-      # it "フリガナは全角カタカナで入力されていれば登録できる" do
-      # end
     end
 
     context '新規登録がうまくいかないとき' do
@@ -88,8 +69,13 @@ RSpec.describe User, type: :model do
         @user.valid?
         expect(@user.errors.full_messages).to include("Password is too short (minimum is 6 characters)")
       end
-      it "パスワードが半角英数混合でないと登録できない" do
+      it "パスワードが半角英数混合でないと登録できない(半角英語のみの場合）" do
         @user.password = "aaaaaa"
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password には英字と数字の両方を含めて設定してください")
+      end
+      it "パスワードが半角英数混合でないと登録できない(半角数字のみの場合)" do
+        @user.password = "111111"
         @user.valid?
         expect(@user.errors.full_messages).to include("Password には英字と数字の両方を含めて設定してください")
       end
@@ -99,17 +85,25 @@ RSpec.describe User, type: :model do
         @user.valid?
         expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password")
       end
-      it "本名が全角（漢字、カタカナ、ひらがな）以外での入力だと登録できない" do
+      it "苗字が全角（漢字、カタカナ、ひらがな）以外での入力だと登録できない" do
         @user.family_name = "aaaaa"
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Family name 全角（漢字、カタカナ、ひらがな）を使用してください")
+      end
+      it "名前が全角（漢字、カタカナ、ひらがな）以外での入力だと登録できない" do
         @user.first_name = "aaaaa"
         @user.valid?
-        expect(@user.errors.full_messages).to include("Family name 全角（漢字、カタカナ、ひらがな）を使用してください", "First name 全角（漢字、カタカナ、ひらがな）を使用してください")
+        expect(@user.errors.full_messages).to include("First name 全角（漢字、カタカナ、ひらがな）を使用してください")
       end
-      it "フリガナが全角カタカナ以外での入力だと登録できない" do
+      it "苗字のフリガナが全角カタカナ以外での入力だと登録できない" do
         @user.family_kana = "あああああ"
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Family kana 全角カタカナを使用してください")
+      end
+      it "名前のフリガナが全角カタカナ以外での入力だと登録できない" do
         @user.first_kana = "あああああ"
         @user.valid?
-        expect(@user.errors.full_messages).to include("Family kana 全角カタカナを使用してください", "First kana 全角カタカナを使用してください")
+        expect(@user.errors.full_messages).to include("First kana 全角カタカナを使用してください")
       end
     end
   end
