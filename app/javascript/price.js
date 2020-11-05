@@ -1,4 +1,4 @@
-function price (){
+function price () {
   const input = document.getElementById("item-price");
   input.addEventListener("input", () => {
     const value = input.value;
