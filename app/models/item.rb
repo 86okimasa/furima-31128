@@ -8,8 +8,10 @@ class Item < ApplicationRecord
     validates :shipping_id
     validates :prefecture_id
     validates :dispatch_id
-    validates :price, format: { with: /\d[300-9999999]/, message: '半角数字で入力!¥300~¥9,999,999の間で設定してください'}
+    validates :price
   end
+
+  validates :price, numericality: { with: /\A[0-9]+\z/, greater_than_or_equal_to: 300, less_than_or_equal_to: 9999999, message: "半角数字で入力！¥300~¥9999999の範囲で入力"}
 
   belongs_to :user
   has_one_attached :image
