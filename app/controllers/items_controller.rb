@@ -3,6 +3,7 @@ class ItemsController < ApplicationController
 
   def index
     @items = Item.order("updated_at DESC")
+    @purchases = Purchase.all
   end
 
   def new
@@ -20,6 +21,7 @@ class ItemsController < ApplicationController
 
   def show
     @item = Item.find(params[:id])
+    @purchases = Purchase.all
   end
 
   def edit
