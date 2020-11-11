@@ -1,14 +1,15 @@
 class ItemPurchase
   
   include ActiveModel::Model
-  attr_accessor :item_id, :user_id, :price, :postal_code, :prefecture_id, :municipalities, :address, :building, :phone_number, :token, :purchase_id
+  attr_accessor :item_id, :user_id, :price, :postal_code, :prefecture_id, :municipalities, :address, :building, :phone_number, :token, :purchase_id, :token
 
   with_options presence: true do
     validates :postal_code, format: {with: /\A[0-9]{3}-[0-9]{4}\z/, message: "is invalid. Include hyphen(-)"}
     validates :prefecture_id, numericality: { other_than: 0, message: "can't be blank" }
     validates :municipalities
     validates :address
-    validates :phone_number, numericality: { only_integer: true, message: "is invalid. Input half-width characters." }
+    validates :phone_number, length: {maximum: 11 }, numericality: { only_integer: true, message: "is invalid. Input half-width characters." }
+    validates :token
   end
 
   def save
