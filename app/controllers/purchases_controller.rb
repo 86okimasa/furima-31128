@@ -3,10 +3,9 @@ class PurchasesController < ApplicationController
 
   def index
     @item = Item.find(params[:item_id])
-    if @item.user_id == current_user.id || @item.purchase.valid?
+    if @item.user_id == current_user.id || @item.purchase != nil
       redirect_to root_path
     end
-
     @item_purchase = ItemPurchase.new
   end
 
