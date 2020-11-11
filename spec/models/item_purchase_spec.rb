@@ -5,7 +5,11 @@ RSpec.describe ItemPurchase, type: :model do
   end
   describe '商品購入'do
     context '購入がうまくいくとき' do
-      it '建物名以外の情報全てが存在するとき' do
+      it '情報全てが存在するとき' do
+        expect(@item_purchase).to be_valid
+      end
+      it '建物名の情報がなくても購入できる'do
+        @item_purchase.building = nil
         expect(@item_purchase).to be_valid
       end
     end
