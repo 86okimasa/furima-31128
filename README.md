@@ -50,7 +50,7 @@
 - belongs_to :item
 - has_one    :purchaser
 
-## purchasers
+## purchasers テーブル
 
  Column          | Type       | Options           |
 | -------------- | ---------- | ----------------- |
@@ -59,7 +59,7 @@
 | municipalities | string     | null: false       |
 | address        | string     | null: false       |
 | building       | string     |                   |
-| number         | string     | null: false       |
+| phone_number   | string     | null: false       |
 | purchase       | references | foreign_key: true |
 
 ### Association
