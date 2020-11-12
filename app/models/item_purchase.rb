@@ -10,6 +10,8 @@ class ItemPurchase
     validates :address
     validates :phone_number, numericality: { only_integer: true, message: "電話番号はハイフン無しで入力" }
     validates :token
+    validates :user_id
+    validates :item_id
   end
 
   def save
